@@ -26,6 +26,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class QueryAnalyser {
 	
 	public static final Map<String, Integer> stringIndexMap = new HashMap<String, Integer>();
@@ -112,7 +114,10 @@ public class QueryAnalyser {
 		}
 	}
 	
-	
+	/**
+	 * 分词分析。
+	 * @param inputPath 输入文件路径：所有查询关键词分词后的文件路径。（如：/Users/liuxl/Desktop/recommendation/data/task1.txt）
+	 */
 	public static void subTextAnalyse(String inputPath) {
 		List<Map<String, Boolean>> subTextList = new ArrayList<Map<String, Boolean>>();
 		File inputFile = new File(inputPath);
@@ -145,6 +150,12 @@ public class QueryAnalyser {
 		}
 	}
 	
+	/**
+	 * 获取分词。（not used.）
+	 * @param text
+	 * @param outputFile
+	 * @param fos
+	 */
 	public static void getSubTexts(String text, String outputFile, FileOutputStream fos){
 		int index = QueryAnalyser.stringIndexMap.get(text);
 		try{
@@ -160,6 +171,7 @@ public class QueryAnalyser {
 			
 		}
 	}
+	
 	
 	public static Map<String, Integer> getTexts(String text){
 		int index = QueryAnalyser.stringIndexMap.get(text);
@@ -471,6 +483,32 @@ public class QueryAnalyser {
         }
         return result;
     }
+	
+	public static void printAllQueryJsons(String graphmlFolderPath, String queryFilePath){
+		List generalList = new ArrayList();
+		File graphmlFolder = new File(graphmlFolderPath);
+		File[] xmlFiles = graphmlFolder.listFiles();
+		for (File f : xmlFiles) {
+			String path = f.getAbsolutePath();
+			if (path.endsWith(".xml")) {
+				generalList.add(DataExtracter.extractNode(path));
+			}
+		}
+		
+		File queryFile = new File(queryFilePath);
+		
+		BufferedReader reader = null;
+		try {
+			reader = new BufferedReader(new FileReader(queryFile));
+			String queryText = null;
+			while ((queryText = reader.readLine()) != null) {
+				ObjectMapper mapper = new ObjectMapper();
+				System.out.println(mapper.writeValueAsString(mapper.readValue(DataExtracter.json(queryText, generalList), Map.class)));
+			}
+		}catch(Exception e){
+			
+		}
+	}
 	
 	public static void main(String[] args){
 		Map<String, Map<String, Float>> filteredMap = new HashMap<String, Map<String, Float>>();

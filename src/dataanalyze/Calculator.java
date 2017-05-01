@@ -1,10 +1,26 @@
 package dataanalyze;
 
+/**
+ * 计算器类，包含数据分析中需要用到的各种计算工具。
+ * @author liuxl
+ */
 public class Calculator {
+	/**
+	 * 计算tf值。
+	 * @param n 词i在文档j中出现的次数。
+	 * @param nSum 文档j的词总数。
+	 * @return 词i对于文档j的tf值。
+	 */
 	public static float tf(int n, int nSum){
 		return (float)n / nSum;
 	}
 	
+	/**
+	 * 计算idf值。
+	 * @param d 文档集中文档的总数量。
+	 * @param dW 文档集中包含词i的文档数量。
+	 * @return 词i对于文档集D的idf值。
+	 */
 	public static float idf(int d, int dW){
 		return (float) Math.log((float)d / dW);
 	}
@@ -15,12 +31,19 @@ public class Calculator {
 	 * @param nSum 文档j中的词总数。
 	 * @param d 文档集总文档数量。
 	 * @param dW 文档集中出现待查词i的文档数量。
-	 * @return
+	 * @return 词i对于文档j的tf-idf值。
 	 */
 	public static float tfIdf(int n, int nSum, int d, int dW){
 		return tf(n, nSum) * idf(d, dW);
 	}
 	
+	/**
+	 * 计算向量余弦夹角。
+	 * @param f1 向量1。
+	 * @param f2 向量2。
+	 * @return 余弦夹角。
+	 * @throws Exception
+	 */
 	public static double vectorCos(float[] f1, float[] f2) throws Exception{
 		if(f1.length != f2.length){
 			throw new Exception("wrong vector dimension.");

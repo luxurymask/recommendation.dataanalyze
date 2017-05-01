@@ -39,7 +39,7 @@ public class DataExtracter {
 					String source = ((Element) edge).getAttribute("source");
 					String target = ((Element) edge).getAttribute("target");
 					if (preMap.containsKey(target)) {
-						throw new Exception("error: one node connection more than one nodes.");
+						throw new Exception("error: one node connecting more than one nodes.");
 					} else {
 						preMap.put(target, source);
 					}
