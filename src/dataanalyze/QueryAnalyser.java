@@ -484,6 +484,36 @@ public class QueryAnalyser {
         return result;
     }
 	
+	/**
+	 * 分词TF值，为分类粒度使用。
+	 * @param tfMap
+	 * @return
+	 * @throws Exception
+	 */
+	public static Map<String, Float> subtextIdf(Map<String, Map<String, Float>> idfMap) throws Exception{
+		Map<String, Float> subtextIdfMap = new HashMap<String, Float>();
+		for(Map.Entry<String, Map<String, Float>> entry : idfMap.entrySet()){
+			String s = entry.getKey();
+			Map<String, Float> map = entry.getValue();
+			for(Map.Entry<String, Float> entry2 : map.entrySet()){
+				String subtext = entry2.getKey();
+				Float idf = entry2.getValue();
+				if(!subtextIdfMap.containsKey(subtext)){
+					subtextIdfMap.put(subtext, idf);
+				}else if(subtextIdfMap.get(subtext).floatValue() != idf.floatValue()){
+					System.out.println(subtextIdfMap.get(subtext) + "|" + idf);
+					throw new Exception("idfMap is not correct.");
+				}
+			}
+		}
+		return subtextIdfMap;
+	}
+	
+	/**
+	 * 打印所有query的json。
+	 * @param graphmlFolderPath
+	 * @param queryFilePath
+	 */
 	public static void printAllQueryJsons(String graphmlFolderPath, String queryFilePath){
 		List generalList = new ArrayList();
 		File graphmlFolder = new File(graphmlFolderPath);
@@ -520,15 +550,39 @@ public class QueryAnalyser {
 		freMap = QueryAnalyser.wordsFrequency("/Users/liuxl/Desktop/recommendation/input/task1.input", "/Users/liuxl/Desktop/recommendation/data/task1.txt");
 		idfMap = QueryAnalyser.wordsIdf(freMap);
 		tfMap = QueryAnalyser.wordsTf(freMap);
+
+		
+//		for(Map.Entry<String, Map<String, Float>> entry : idfMap.entrySet()){
+//			String s = entry.getKey();
+//			System.out.println(s);
+//			Map<String, Float> map = entry.getValue();
+//			for(Map.Entry<String, Float> entry2 : map.entrySet()){
+//				String subtext = entry2.getKey();
+//				Float tf = entry2.getValue();
+//				System.out.print(subtext + "|" + tf + "|");
+//			}
+//			System.out.println();
+//		}
+		
 		try {
-			tfIdfMap = QueryAnalyser.wordsTfIdf(tfMap, idfMap);
+			Map<String, Float> subtextIdfMap = QueryAnalyser.subtextIdf(idfMap);
+			Map<String, Float> subtextIdfMapSorted = QueryAnalyser.sortByValue7(subtextIdfMap);
+			for(Map.Entry<String, Float> entry : subtextIdfMapSorted.entrySet()){
+				System.out.println(entry.getKey() + "|" + entry.getValue());
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		QueryAnalyser.filterStopwords(tfIdfMap, "/Users/liuxl/Desktop/recommendation/input/stopwords.txt");
-		System.out.println(tfIdfMap.get("化疗药物 药物机理"));
-		System.out.println(tfIdfMap.get("静脉滴注 化学疗法"));
+//		try {
+//			tfIdfMap = QueryAnalyser.wordsTfIdf(tfMap, idfMap);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		QueryAnalyser.filterStopwords(tfIdfMap, "/Users/liuxl/Desktop/recommendation/input/stopwords.txt");
+//		System.out.println(tfIdfMap.get("化疗药物 药物机理"));
+//		System.out.println(tfIdfMap.get("静脉滴注 化学疗法"));
 //		Map<String, float[]> wordVectorMap = wordVectors(tfIdfMap);
 //		Map<String, Map<String, Double>> similarityMap = wordsCosSimilarity(wordVectorMap);
 //		for(Map.Entry<String, Map<String, Double>> entry : similarityMap.entrySet()){
