@@ -567,6 +567,7 @@ public class QueryAnalyser {
 		try {
 			Map<String, Float> subtextIdfMap = QueryAnalyser.subtextIdf(idfMap);
 			Map<String, Float> subtextIdfMapSorted = QueryAnalyser.sortByValue7(subtextIdfMap);
+			System.out.println(subtextIdfMapSorted.size());
 			for(Map.Entry<String, Float> entry : subtextIdfMapSorted.entrySet()){
 				System.out.println(entry.getKey() + "|" + entry.getValue());
 			}
