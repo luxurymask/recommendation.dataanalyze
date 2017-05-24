@@ -29,9 +29,12 @@ public class Task {
 	 */
 	private String subTextFilePath;
 	
-	private Map<String, Map<String, String>> queryClickQueryMap = new HashMap<String, Map<String, String>>();
-	private Map<String, Map<String, String>> queryQueryClickMap = new HashMap<String, Map<String, String>>();
-	private Map<String, Map<String, String>> queryQueryQueryMap = new HashMap<String, Map<String, String>>();
+	private int queryCount = 0;
+	private int clickCount = 0;
+	
+	private Map<String, Map<String, List<String>>> queryClickQueryMap = new HashMap<String, Map<String, List<String>>>();
+	private Map<String, Map<String, List<String>>> queryQueryClickMap = new HashMap<String, Map<String, List<String>>>();
+	private Map<String, Map<String, List<String>>> queryQueryQueryMap = new HashMap<String, Map<String, List<String>>>();
 	
 	public Task(String graphMLFolderPath, String queryFilePath, String subTextFilePath){
 		this.graphMLFolderPath = graphMLFolderPath;
@@ -75,11 +78,12 @@ public class Task {
 							String nodeId = ((Element) node).getAttribute("id");
 							String nodeText = "";
 							if(nodeType.equals("1")){
-								nodeText = ((Element) node).getElementsByTagName("queryText").item(0).getTextContent()
-										.trim().toLowerCase();
+								this.queryCount++;
+								nodeText = ((Element) node).getElementsByTagName("queryText").item(0).getTextContent();
+								//System.out.println(nodeText);
 							}else if(nodeType.equals("2")){
-								nodeText = ((Element) node).getElementsByTagName("title").item(0).getTextContent()
-										.trim().toLowerCase();
+								this.clickCount++;
+								nodeText = ((Element) node).getElementsByTagName("title").item(0).getTextContent();
 							}
 							SearchNode searchNode = new SearchNode(nodeType, nodeText, nodeId);
 							idNodeMap.put(nodeId, searchNode);
@@ -98,12 +102,12 @@ public class Task {
 						List<String> nextList = nextMap.get(currentNodeId);
 						if(nextList == null){
 							if(currentNode.getType().equals("2")){
-								Map<String, String> clickQueryMap = this.queryClickQueryMap.getOrDefault(preNode.getText(), new HashMap<String, String>());
-								clickQueryMap.put(currentNode.getText(), "");
+								Map<String, List<String>> clickQueryMap = this.queryClickQueryMap.getOrDefault(preNode.getText(), new HashMap<String, List<String>>());
+								clickQueryMap.put(currentNode.getText(), null);
 								this.queryClickQueryMap.put(preNode.getText(), clickQueryMap);
 							}else{
-								Map<String, String> queryClickMap = this.queryQueryClickMap.getOrDefault(preNode.getText(), new HashMap<String, String>());
-								queryClickMap.put(currentNode.getText(), "");
+								Map<String, List<String>> queryClickMap = this.queryQueryClickMap.getOrDefault(preNode.getText(), new HashMap<String, List<String>>());
+								queryClickMap.put(currentNode.getText(), null);
 								this.queryQueryClickMap.put(preNode.getText(), queryClickMap);
 							}
 							continue;
@@ -111,16 +115,25 @@ public class Task {
 						for(String nextId : nextList){
 							SearchNode nextNode = idNodeMap.get(nextId);
 							if(currentNode.getType().equals("2")){
-								Map<String, String> clickQueryMap = this.queryClickQueryMap.getOrDefault(preNode.getText(), new HashMap<String, String>());
-								clickQueryMap.put(currentNode.getText(), nextNode.getText());
+								Map<String, List<String>> clickQueryMap = this.queryClickQueryMap.getOrDefault(preNode.getText(), new HashMap<String, List<String>>());
+								List<String> queryList = clickQueryMap.getOrDefault(currentNode.getText(), new ArrayList<String>());
+								if(queryList == null) queryList = new ArrayList<String>();
+								queryList.add(nextNode.getText());
+								clickQueryMap.put(currentNode.getText(), queryList);
 								this.queryClickQueryMap.put(preNode.getText(), clickQueryMap);
 							}else if(nextNode.getType().equals("2")){
-								Map<String, String> queryClickMap = this.queryQueryClickMap.getOrDefault(preNode.getText(), new HashMap<String, String>());
-								queryClickMap.put(currentNode.getText(), nextNode.getText());
+								Map<String, List<String>> queryClickMap = this.queryQueryClickMap.getOrDefault(preNode.getText(), new HashMap<String, List<String>>());
+								List<String> clickList = queryClickMap.getOrDefault(currentNode.getText(), new ArrayList<String>());
+								if(clickList == null) clickList = new ArrayList<String>();
+								clickList.add(nextNode.getText());
+								queryClickMap.put(currentNode.getText(), clickList);
 								this.queryQueryClickMap.put(preNode.getText(), queryClickMap);
 							}else{
-								Map<String, String> queryQueryMap = this.queryQueryQueryMap.getOrDefault(preNode.getText(), new HashMap<String, String>());
-								queryQueryMap.put(currentNode.getText(), nextNode.getText());
+								Map<String, List<String>> queryQueryMap = this.queryQueryQueryMap.getOrDefault(preNode.getText(), new HashMap<String, List<String>>());
+								List<String> queryList = queryQueryMap.getOrDefault(currentNode.getText(), new ArrayList<String>());
+								if(queryList == null) queryList = new ArrayList<String>();
+								queryList.add(nextNode.getText());
+								queryQueryMap.put(currentNode.getText(), queryList);
 								this.queryQueryQueryMap.put(preNode.getText(), queryQueryMap);
 							}
 						}
@@ -128,18 +141,19 @@ public class Task {
 				}
 			}
 		}
-		
+		System.out.println(this.clickCount);
+		System.out.println(this.queryCount);
 	}
 	
-	public Map<String, Map<String, String>> getQueryClickQueryMap(){
+	public Map<String, Map<String, List<String>>> getQueryClickQueryMap(){
 		return this.queryClickQueryMap;
 	}
 	
-	public Map<String, Map<String, String>> getQueryQueryClickMap()	{
+	public Map<String, Map<String, List<String>>> getQueryQueryClickMap()	{
 		return this.queryQueryClickMap;
 	}
 	
-	public Map<String, Map<String, String>> getQueryQueryQueryMap()	{
+	public Map<String, Map<String, List<String>>> getQueryQueryQueryMap()	{
 		return this.queryQueryQueryMap;
 	}
 }
