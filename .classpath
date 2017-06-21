@@ -8,5 +8,8 @@
 	<classpathentry kind="lib" path="lib/jackson-core-asl-1.9.13.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-databind-2.7.1-1.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-mapper-asl-1.9.13.jar"/>
+	<classpathentry kind="lib" path="lib/bson-3.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/mongodb-driver-3.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/mongodb-driver-core-3.2.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
