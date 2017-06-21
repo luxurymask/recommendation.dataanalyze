@@ -74,9 +74,9 @@ public class QueryExtractor {
 		for (File f : xmlFiles) {
 			String path = f.getAbsolutePath();
 			if (path.endsWith(".xml")) {
-				String outputPath = path.substring(65);
-				outputPath = outputPath.substring(0, outputPath.length() - 4);
-				extractor.extractNode(path, "/Users/liuxl/Desktop/recommendation/query with timestamp/" + outputPath + ".txt");
+				String outputName = path.substring(65);
+				outputName = outputName.substring(0, outputName.length() - 4);
+				extractor.extractNode(path, "/Users/liuxl/Desktop/recommendation/query with timestamp/" + outputName + ".txt");
 			}
 		}
 		
