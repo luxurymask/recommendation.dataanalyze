@@ -139,19 +139,27 @@ public class DataExtractor {
 	}
 	
 	public static void main(String[] args){
-		DataExtractor extractorTask1 = new DataExtractor("/Users/liuxl/Desktop/recommendation/graphml/task1", "/Users/liuxl/Desktop/recommendation/input/task1.input", "/Users/liuxl/Desktop/recommendation/data/task1.txt");
-		extractorTask1.extractData("/Users/liuxl/Desktop/recommendation/nodes/task1");
+//		DataExtractor extractorTask1 = new DataExtractor("/Users/liuxl/Desktop/recommendation/graphml/task1", "/Users/liuxl/Desktop/recommendation/input/task1.input", "/Users/liuxl/Desktop/recommendation/data/task1.txt");
+//		extractorTask1.extractData("/Users/liuxl/Desktop/recommendation/nodes/task1");
+//		
+//
+//		DataExtractor extractorTask2 = new DataExtractor("/Users/liuxl/Desktop/recommendation/graphml/task2", "/Users/liuxl/Desktop/recommendation/input/task2.input", "/Users/liuxl/Desktop/recommendation/data/task2.txt");
+//		extractorTask2.extractData("/Users/liuxl/Desktop/recommendation/nodes/task2");
+//		
+//
+//		DataExtractor extractorTask3 = new DataExtractor("/Users/liuxl/Desktop/recommendation/graphml/task3", "/Users/liuxl/Desktop/recommendation/input/task3.input", "/Users/liuxl/Desktop/recommendation/data/task3.txt");
+//		extractorTask3.extractData("/Users/liuxl/Desktop/recommendation/nodes/task3");
+//		
+//
+//		DataExtractor extractorTask4 = new DataExtractor("/Users/liuxl/Desktop/recommendation/graphml/task4", "/Users/liuxl/Desktop/recommendation/input/task4.input", "/Users/liuxl/Desktop/recommendation/data/task4.txt");
+//		extractorTask4.extractData("/Users/liuxl/Desktop/recommendation/nodes/task4");
+		
+		DataExtractor extractorTask1 = new DataExtractor("/Users/liuxl/Desktop/毕业设计-not published/basic data/graphml/第二批/task1", "", "");
+		extractorTask1.extractData("/Users/liuxl/Desktop/recommendation/nodes/第二批/task1");
 		
 
-		DataExtractor extractorTask2 = new DataExtractor("/Users/liuxl/Desktop/recommendation/graphml/task2", "/Users/liuxl/Desktop/recommendation/input/task2.input", "/Users/liuxl/Desktop/recommendation/data/task2.txt");
-		extractorTask2.extractData("/Users/liuxl/Desktop/recommendation/nodes/task2");
+		DataExtractor extractorTask2 = new DataExtractor("/Users/liuxl/Desktop/毕业设计-not published/basic data/graphml/第二批/task2", "", "");
+		extractorTask2.extractData("/Users/liuxl/Desktop/recommendation/nodes/第二批/task2");
 		
-
-		DataExtractor extractorTask3 = new DataExtractor("/Users/liuxl/Desktop/recommendation/graphml/task3", "/Users/liuxl/Desktop/recommendation/input/task3.input", "/Users/liuxl/Desktop/recommendation/data/task3.txt");
-		extractorTask3.extractData("/Users/liuxl/Desktop/recommendation/nodes/task3");
-		
-
-		DataExtractor extractorTask4 = new DataExtractor("/Users/liuxl/Desktop/recommendation/graphml/task4", "/Users/liuxl/Desktop/recommendation/input/task4.input", "/Users/liuxl/Desktop/recommendation/data/task4.txt");
-		extractorTask4.extractData("/Users/liuxl/Desktop/recommendation/nodes/task4");
 	}
 }

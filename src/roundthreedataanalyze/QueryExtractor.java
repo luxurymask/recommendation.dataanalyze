@@ -59,7 +59,7 @@ public class QueryExtractor {
 			writer.flush();
 			writer.close();
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 		System.out.println(count);
 		System.out.println(queryTimestampMap.size());
@@ -69,14 +69,14 @@ public class QueryExtractor {
 	public static void main(String[] args){
 		QueryExtractor extractor = new QueryExtractor();
 
-		File graphmlFolder = new File("/Users/liuxl/Desktop/毕业设计-not published/basic data/graphml/task2");
+		File graphmlFolder = new File("/Users/liuxl/Desktop/毕业设计-not published/basic data/graphml/第二批/task2/");
 		File[] xmlFiles = graphmlFolder.listFiles();
 		for (File f : xmlFiles) {
 			String path = f.getAbsolutePath();
 			if (path.endsWith(".xml")) {
-				String outputName = path.substring(65);
+				String outputName = path.substring(69);
 				outputName = outputName.substring(0, outputName.length() - 4);
-				extractor.extractNode(path, "/Users/liuxl/Desktop/recommendation/query with timestamp/" + outputName + ".txt");
+				extractor.extractNode(path, "/Users/liuxl/Desktop/recommendation/query with timestamp/第二批/" + outputName + ".txt");
 			}
 		}
 		

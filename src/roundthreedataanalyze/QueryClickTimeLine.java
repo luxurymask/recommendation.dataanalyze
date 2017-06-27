@@ -60,14 +60,14 @@ public class QueryClickTimeLine {
 	}
 	
 	public static void main(String[] args){
-		File graphmlFolder = new File("/Users/liuxl/Desktop/毕业设计-not published/basic data/graphml/task2");
+		File graphmlFolder = new File("/Users/liuxl/Desktop/毕业设计-not published/basic data/graphml/第二批/task2");
 		File[] xmlFiles = graphmlFolder.listFiles();
 		for (File f : xmlFiles) {
 			String path = f.getAbsolutePath();
 			if (path.endsWith(".xml")) {
-				String outputName = path.substring(65);
+				String outputName = path.substring(69);
 				outputName = outputName.substring(0, outputName.length() - 4);
-				String outputPath = "/Users/liuxl/Desktop/recommendation/queryclicktimeline/" + outputName + ".txt";
+				String outputPath = "/Users/liuxl/Desktop/recommendation/queryclicktimeline/第二批/" + outputName + ".txt";
 				File outputFile = new File(outputPath);
 				Map<String, String> map = QueryClickTimeLine.getQueryClickTimeLine(path);
 				BufferedWriter writer;

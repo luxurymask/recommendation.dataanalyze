@@ -60,6 +60,7 @@ public class QueryGranularity {
 	public static void main(String[] args){
 		//QueryGranularity.instance.save("/Users/liuxl/Desktop/query粒度input.txt");
 		//QueryGranularity.instance.save("/Users/liuxl/Desktop/query粒度input补充.txt");
+		//QueryGranularity.instance.save("/Users/liuxl/Desktop/query粒度input第二批.txt");
 		Scanner in = new Scanner(System.in);
 		int n = in.nextInt();
 		String[] queries = new String[n];
@@ -67,8 +68,9 @@ public class QueryGranularity {
 		for(int i = 0;i < n;i++){
 			queries[i] = in.nextLine();
 		}
+		int i = 0;
 		for(String query : queries){
-			System.out.println(QueryGranularity.instance.check(query));
+			System.out.println(query + " | " + QueryGranularity.instance.check(query));
 		}
 	}
 }
