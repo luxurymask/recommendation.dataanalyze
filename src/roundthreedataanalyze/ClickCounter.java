@@ -78,7 +78,7 @@ public class ClickCounter {
 	}
 	
 	public static void main(String[] args){
-		File graphmlFolder = new File("/Users/liuxl/Desktop/毕业设计-not published/basic data/graphml/task2");
+		File graphmlFolder = new File("/Users/liuxl/Desktop/毕业设计-not published/basic data/graphml/task4");
 		File[] xmlFiles = graphmlFolder.listFiles();
 		for (File f : xmlFiles) {
 			String path = f.getAbsolutePath();
@@ -87,7 +87,7 @@ public class ClickCounter {
 				Map<String, Integer> countMap = counter.setMaps(path);
 				String outputName = path.substring(65);
 				outputName = outputName.substring(0, outputName.length() - 4);
-				File outputFile = new File("/Users/liuxl/Desktop/recommendation/图上结构分析/click count/" + outputName + ".txt");
+				File outputFile = new File("/Users/liuxl/Desktop/recommendation/phase1/click count/" + outputName + ".txt");
 				BufferedWriter writer;
 				try{
 					if(!outputFile.exists()){
